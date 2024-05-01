@@ -1,0 +1,11 @@
+
+#ifndef LIB_TRUSTED_CONSENSUS_2_LOG_ENTRY_STATUS_H
+#define LIB_TRUSTED_CONSENSUS_2_LOG_ENTRY_STATUS_H
+
+enum LogEntryStatus {
+    None,
+    Accepted,
+    Committed,
+};
+
+#endif //LIB_TRUSTED_CONSENSUS_2_LOG_ENTRY_STATUS_H

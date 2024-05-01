@@ -1,0 +1,17 @@
+
+enclave {
+    from "util/util.edl" import *;
+    from "sgx_socket/sgx_socket.edl" import *;
+    from "ssl_socket/ssl_socket.edl" import *;
+    from "attestation/attestation.edl" import *;
+    from "scheduler/scheduler.edl" import *;
+
+    trusted {
+        public void ecall_launch_attest_node(int ignoreTrust,
+                                             int useDCAP,
+                                             int threadCount,
+                                             [in, string]const char *epidServer,
+                                             int epidConnect,
+                                             int attestListen);
+    };
+};

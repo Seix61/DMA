@@ -1,0 +1,16 @@
+
+enclave {
+    from "util/util.edl" import *;
+    from "sgx_socket/sgx_socket.edl" import *;
+    from "ssl_socket/ssl_socket.edl" import *;
+    from "scheduler/scheduler.edl" import *;
+    from "attestation/attestation.edl" import *;
+
+    trusted {
+        public void ecall_launch_user_node(int attestConnect,
+                                           int userNodeId,
+                                           int userListen,
+                                           size_t peerStructSize,
+                                           [in, size = peerStructSize] const char *peerStruct);
+    };
+};

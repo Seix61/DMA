@@ -1,0 +1,12 @@
+
+enclave {
+    trusted {
+        public void ecall_async_task_callback(uint64_t taskId);
+    };
+
+    untrusted {
+        void u_sleep(uint32_t milliseconds);
+        void ocall_delayed_task_schedule(uint64_t taskId, uint32_t milliseconds) allow(ecall_async_task_callback);
+        void ocall_detached_task_schedule(uint64_t taskId) allow(ecall_async_task_callback);
+    };
+};

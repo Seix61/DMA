@@ -1,0 +1,12 @@
+[submodule "3rd-party/spdlog"]
+	path = 3rd-party/spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "3rd-party/epid-sdk"]
+	path = 3rd-party/epid-sdk
+	url = https://github.com/Intel-EPID-SDK/epid-sdk
+[submodule "3rd-party/CLI11"]
+	path = 3rd-party/CLI11
+	url = https://github.com/CLIUtils/CLI11.git
+[submodule "3rd-party/jsoncpp"]
+	path = 3rd-party/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp.git

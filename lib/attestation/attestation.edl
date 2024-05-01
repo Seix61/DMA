@@ -1,0 +1,106 @@
+
+enclave {
+    from "util/util.edl" import u_current_time_secs;
+
+    include "sgx_report.h"
+    include "sgx_quote.h"
+    include "sgx_uae_epid.h"
+    include "sgx_uae_quote_ex.h"
+    include "sgx_qve_header.h"
+    include "sgx_ql_lib_common.h"
+    include "sgx_ql_quote.h"
+
+    untrusted {
+        sgx_status_t u_ias_buffer_get(uint64_t buffer_id,
+                                      [out, size = buffer_size] char *buffer,
+                                      size_t buffer_size);
+
+        sgx_status_t u_ias_retrieve_sig_rl([in] uint8_t gid[4],
+                                           [out, size = 8] size_t *sig_rl_size,
+                                           [out, size = 64] uint64_t *buffer_id);
+
+        sgx_status_t u_ias_verify_attestation_evidence([in, size = quote_size] const sgx_quote_t *p_quote, size_t quote_size,
+                                                       [in, size = nonce_size] const char *nonce, size_t nonce_size,
+                                                       [out, size = 8] size_t *body_size, [out, size = 64] uint64_t *body_buffer_id,
+                                                       [out, size = 8] size_t *signature_size, [out, size = 64] uint64_t *signature_buffer_id,
+                                                       [out, size = 8] size_t *certificate_size, [out, size = 64] uint64_t *certificate_buffer_id);
+    };
+
+    untrusted {
+        sgx_status_t u_ias_verify_parse_quote_size([in, size = verification_report_size] const char *p_verification_report, size_t verification_report_size,
+                                                   [out, size = 8] size_t *quote_size);
+
+        sgx_status_t u_ias_verify_parse_quote([in, size = verification_report_size] const char *p_verification_report, size_t verification_report_size,
+                                              [out, size = quote_size] sgx_quote_t *p_quote, size_t quote_size);
+
+        sgx_status_t u_ias_verify_parse_nonce_size([in, size = verification_report_size] const char *p_verification_report, size_t verification_report_size,
+                                                   [out, size = 8] size_t *nonce_size);
+
+        sgx_status_t u_ias_verify_parse_nonce([in, size = verification_report_size] const char *p_verification_report, size_t verification_report_size,
+                                              [out, size = nonce_size] char *p_quote, size_t nonce_size);
+
+        sgx_status_t u_ias_verify_parse_quote_status([in, size = verification_report_size] const char *p_verification_report, size_t verification_report_size,
+                                                     [out, size = 4] uint32_t *p_status);
+    };
+
+    trusted {
+        public sgx_status_t t_sgx_create_report([size = 512, in] const sgx_target_info_t *target_info,
+                                                [size = 64, in] const sgx_report_data_t *report_data,
+                                                [size = 432, out] sgx_report_t *report);
+    };
+
+    untrusted {
+        sgx_status_t u_sgx_init_quote([size = 512, out] sgx_target_info_t *p_target_info,
+                                      [size = 4, out] sgx_epid_group_id_t *p_gid);
+
+        sgx_status_t u_sgx_calc_quote_size([size = sig_rl_size, in] const uint8_t *p_sig_rl, uint32_t sig_rl_size,
+                                           [size = 4, out] uint32_t* p_quote_size);
+
+        sgx_status_t u_sgx_get_quote([size = 432, in] const sgx_report_t *p_report,
+                            sgx_quote_sign_type_t quote_type,
+                            [size = 16, in] const sgx_spid_t *p_spid,
+                            [size = 16, in] const sgx_quote_nonce_t *p_nonce,
+                            [size = sig_rl_size, in] const uint8_t *p_sig_rl, uint32_t sig_rl_size,
+                            [size = 432, out] sgx_report_t *p_qe_report,
+                            [size = quote_size, out] sgx_quote_t *p_quote, uint32_t quote_size);
+    };
+
+    untrusted {
+        sgx_status_t u_sgx_select_att_key_id([size = att_key_id_list_size, in] const uint8_t *p_att_key_id_list,
+                                             uint32_t att_key_id_list_size,
+                                             [size = 256, out] sgx_att_key_id_t *p_selected_key_id);
+
+        sgx_status_t u_sgx_init_quote_ex([size = 256, in] const sgx_att_key_id_t *p_att_key_id,
+                                         [size = 512, out] sgx_target_info_t *p_qe_target_info,
+                                         [size = 8, out] size_t *out_pub_key_id_size,
+                                         [size = in_pub_key_id_size, out] uint8_t *p_pub_key_id,
+                                         size_t in_pub_key_id_size);
+
+        sgx_status_t u_sgx_get_quote_size_ex([size = 256, in] const sgx_att_key_id_t *p_att_key_id,
+                                             [size = 4, out] uint32_t *p_quote_size);
+
+        sgx_status_t u_sgx_get_quote_ex([size = 432, in] const sgx_report_t *p_app_report,
+                                        [size = 256, in] const sgx_att_key_id_t *p_att_key_id,
+                                        [size = 960, out] sgx_qe_report_info_t *p_qe_report_info,
+                                        [size = quote_size, out] uint8_t *p_quote,
+                                        uint32_t quote_size);
+
+        sgx_status_t u_sgx_get_supported_att_key_id_num([size = 4, out] uint32_t *p_att_key_id_num);
+
+        sgx_status_t u_sgx_get_supported_att_key_ids([count = att_key_id_num, out] sgx_att_key_id_ext_t *p_att_key_id_list,
+                                                     uint32_t att_key_id_num);
+    };
+
+    untrusted {
+        quote3_error_t u_sgx_qv_get_quote_supplemental_data_size([out] uint32_t *p_supplemental_data_size);
+
+        quote3_error_t u_sgx_qv_verify_quote([size = quote_size, in] const uint8_t *p_quote,
+                                             uint32_t quote_size,
+                                             time_t expiration_check_date,
+                                             [out] sgx_ql_qv_result_t *p_quote_verification_result,
+                                             [size = qve_report_info_size, in, out] sgx_ql_qe_report_info_t *p_qve_report_info,
+                                             size_t qve_report_info_size,
+                                             [size = supplemental_data_size, out] uint8_t *p_supplemental_data,
+                                             uint32_t supplemental_data_size);
+    };
+};

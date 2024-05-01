@@ -1,0 +1,21 @@
+
+enclave {
+    trusted {
+        public void t_util_hello(void);
+    };
+
+    untrusted {
+        void u_log_trace([in, string] const char *str);
+        void u_log_debug([in, string] const char *str);
+        void u_log_info([in, string] const char *str);
+        void u_log_warn([in, string] const char *str);
+        void u_log_error([in, string] const char *str);
+        void u_log_critical([in, string] const char *str);
+    };
+
+    untrusted {
+        long u_current_time_secs(void);
+        long u_current_time_millis(void);
+        long u_current_time_nanos(void);
+    };
+};
