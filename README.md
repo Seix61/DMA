@@ -37,8 +37,7 @@ To use DMA, the following conditions must be met:
    $ git clone https://github.com/Seix61/DMA.git --recursive
    ```
 
-5. If you need to use EPID attestation, supplement the configuration information in `include/global
-/general_settings.h`. For more information, visit https://api.portal.trustedservices.intel.com/EPID-attestation.
+5. If you need to use EPID attestation, supplement the configuration information in `include/global/general_settings.h`. For more information, visit https://api.portal.trustedservices.intel.com/EPID-attestation.
 
    ```cpp
    // Your EPID Service Provider ID
