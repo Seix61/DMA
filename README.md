@@ -1,8 +1,16 @@
-# DMA
+# DMA: Mutual Attestation Framework for Distributed Enclaves
 
-(ICICS 2024) DMA: Mutual Attestation Framework for Distributed Enclaves
+Thank you for your interest in **DMA**. This document will get you started with our prototype implementation. **DMA** is accepted by **_ICICS 2024_**, see [program](http://icics2024.aegean.gr/programs/) of accepted papers for more details. You can download the [paper](http://icics2024.aegean.gr/wp-content/uploads/2024/08/150560135.pdf) and [slides](http://icics2024.aegean.gr/wp-content/uploads/2024/10/Peixi-Li-ICICS16-1630.pdf).
 
-## Requirements
+## Overview of DMA
+![architecture](./doc/architecture.pdf)
+DMA provides strong freshness binding of the attestation evidence and uses consensus algorithms to ensure balanced trust across network domains. _AuthE_ are placed
+on authentication nodes, while _AttestE_ are placed on user nodes. In addition,
+function-specific user-level enclaves, referred to as user enclaves (_UserE_), are
+also deployed in user nodes.
+
+
+## Experiment Dependencies
 
 To use DMA, the following conditions must be met:
 
@@ -138,3 +146,22 @@ After generating the runtime parameters, please run DMA in the following order.
    $ ./UserApp --config ./config_user.ini
    ```
 
+## Citation
+If you find this useful in your research, please consider citing:
+```
+@inproceedings{li2024DMA,
+author = {Li, Peixi and Li, Xiang and Fang, Liming},
+title = {DMA: Mutual Attestation Framework for Distributed Enclaves},
+year = {2024},
+isbn = {978-981-97-8797-5},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+url = {https://doi.org/10.1007/978-981-97-8798-2_8},
+doi = {10.1007/978-981-97-8798-2_8},
+booktitle = {Information and Communications Security: 26th International Conference, ICICS 2024, Mytilene, Greece, August 26–28, 2024, Proceedings, Part I},
+pages = {145–164},
+numpages = {20},
+keywords = {Remote attestation, Intel SGX, Distributed system},
+location = {Mytilene, Greece}
+}
+```
