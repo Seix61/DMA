@@ -3,7 +3,7 @@
 Thank you for your interest in **DMA**. This document will get you started with our prototype implementation. **DMA** is accepted by **_ICICS 2024_**, see [program](http://icics2024.aegean.gr/programs/) of accepted papers for more details. You can download the [paper](http://icics2024.aegean.gr/wp-content/uploads/2024/08/150560135.pdf) and [slides](http://icics2024.aegean.gr/wp-content/uploads/2024/10/Peixi-Li-ICICS16-1630.pdf).
 
 ## Overview of DMA
-![architecture](./doc/architecture.pdf)
+![architecture](./doc/architecture.jpg)
 DMA provides strong freshness binding of the attestation evidence and uses consensus algorithms to ensure balanced trust across network domains. _AuthE_ are placed
 on authentication nodes, while _AttestE_ are placed on user nodes. In addition,
 function-specific user-level enclaves, referred to as user enclaves (_UserE_), are
