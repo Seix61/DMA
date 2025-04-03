@@ -95,6 +95,7 @@ To run `run_generator.py`, create two JSON files in the directory where the scri
        "id": 1 // The ID of the current machine is 1
    }
    ```
+**Note: The order in which the nodes appear in `peers.json` will determine the node ids in `current.json`.** e.g., if there are two machines with IP addresses `192.168.1.2` and `192.168.1.3`, and if `peers.json` is `{ "192.168.1.2": 1, "192.168.1.3": 1 }`, then machine `192.168.1.2` has id `1` in `current.json`, and machine `192.168.1.3` has id `2` in `current.json`.
 
 ### Run run_generator
 
